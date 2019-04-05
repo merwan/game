@@ -1,6 +1,10 @@
 defmodule Hangman do
   def new_game() do
-    Hangman.Server.start_link()
+    spec = %{
+      id: Hangman.Server,
+      start: {Hangman.Server, :start_link, []}
+    }
+    DynamicSupervisor.start_child(Hangman.DynamicSupervisor, spec)
   end
 
   def tally(game_pid) do
